@@ -1,8 +1,10 @@
 ENTRY(kernel_main)
-     Sections {
+     SECTIONS {
 	. = 0x10000;
 
 	.text : { *(.text)}
 	
 	.data : { *(.data)}
+    
+    .bss_start = .;
 }
