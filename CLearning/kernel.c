@@ -6,6 +6,7 @@ typedef unsigned short uint16_t;
 extern char __bss_start;
 extern char __bss_end;
 
+uint16_t* vga_buffer= (uint16_t*) 0xB8000;
 
 void  bsszero(){
   
@@ -15,12 +16,21 @@ void  bsszero(){
 
 }
 
-void kernel_main(){
-    bsszero();
-    uint16_t* vga_buffer = (uint16_t*) 0xB8000;
-    vga_buffer[0] = (0x07 << 8) | 'H';   
+void write(char *str){
 
-    vga_buffer[1] = (0x07 << 8) | 'e';
+    int i = 0;
+    while (*str != '\0'){
+        vga_buffer[i] = (0x07 << 8) | *str;
+            str ++;      
+            i++;
+           
+    }
+}
     
 
+void kernel_main(){
+    bsszero();   
+    write("Hello World!");    
+   
 }
+
