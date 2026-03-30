@@ -17,20 +17,35 @@ void  bsszero(){
 }
 
 void write(char *str){
-
-    int i = 0;
-    while (*str != '\0'){
-        vga_buffer[i] = (0x07 << 8) | *str;
+    int row= 0;
+    int col= 0;
+    int index;
+  /* while loop as long as it doesn't hit a nullbyte or vga limit */  
+    while (*str != '\0' && row < 25){
+        index = row * 80 + col;
+        vga_buffer[index] = (0x07 << 8) | *str;
             str ++;      
-            i++;
-           
+            col++;
+ /*making a newline for every 80 char hit */    
+         if (col == 80){
+            ++row;
+            col = 0;
+         }
+        if (row == 25){
+      
+            for(int i = 0 ; i < 2000 ; i++){
+                vga_buffer[i] = (0x07 << 8) | ' ' ;
+            }
+       
+         col = 0;
+         row = 0;
     }
 }
-    
+}   
 
 void kernel_main(){
     bsszero();   
-    write("Hello World!");    
+    write("Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!");    
    
 }
 
